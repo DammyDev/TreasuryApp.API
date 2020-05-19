@@ -36,27 +36,28 @@ namespace TreasuryApp.API.Controllers
             return resources;
         }
 
-        ///// <summary>
-        ///// Saves a new category.
-        ///// </summary>
-        ///// <param name="resource">Category data.</param>
-        ///// <returns>Response for the request.</returns>
-        //[HttpPost]
-        //[ProducesResponseType(typeof(CategoryResource), 201)]
-        //[ProducesResponseType(typeof(ErrorResource), 400)]
-        //public async Task<IActionResult> PostAsync([FromBody] SaveCategoryResource resource)
-        //{
-        //    var category = _mapper.Map<SaveCategoryResource, Category>(resource);
-        //    var result = await _categoryService.SaveAsync(category);
+        /// <summary>
+        /// Add a new company entity.
+        /// </summary>
+        /// <param name="resource">Company data.</param>
+        /// <returns>Response for the request.</returns>
+        [HttpPost]
+        [ProducesResponseType(typeof(CategoryResource), 201)]
+        [ProducesResponseType(typeof(ErrorResource), 400)]
+        public async Task<IActionResult> PostAsync([FromBody] SaveCompanyResource resource)
+        {
+            var company = _mapper.Map<SaveCompanyResource, Company>(resource);
+            var result = await _companyService.SaveAsync(company);
 
-        //    if (!result.Success)
-        //    {
-        //        return BadRequest(new ErrorResource(result.Message));
-        //    }
+            if (!result.Success)
+            {
+                return BadRequest(new ErrorResource(result.Message));
+            }
 
-        //    var categoryResource = _mapper.Map<Category, CategoryResource>(result.Resource);
-        //    return Ok(categoryResource);
-        //}
+            var companyResource = _mapper.Map<Company, CompanyResource>(result.Resource);
+            //return Ok(companyResource);
+            return CreatedAtAction(null, new { id = company.Id }, companyResource);
+        }
 
         ///// <summary>
         ///// Updates an existing category according to an identifier.

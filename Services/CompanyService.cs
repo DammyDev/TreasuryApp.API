@@ -27,29 +27,32 @@ namespace TreasuryApp.API.Services
         {
             // Here I try to get the categories list from the memory cache. If there is no data in cache, the anonymous method will be
             // called, setting the cache to expire one minute ahead and returning the Task that lists the categories from the repository.
-            var categories = await _cache.GetOrCreateAsync(CacheKeys.CompaniesList, (entry) => {
-                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1);
-                return _companyRepository.ListAsync();
-            });
-            
+            //var categories = await _cache.GetOrCreateAsync(CacheKeys.CompaniesList, (entry) => {
+            //    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1);
+            //    return _companyRepository.ListAsync();
+            //});
+
+            var categories = await _companyRepository.ListAsync();
+
+
             return categories;
         }
 
-        //public async Task<CategoryResponse> SaveAsync(Category category)
-        //{
-        //    try
-        //    {
-        //        await _categoryRepository.AddAsync(category);
-        //        await _unitOfWork.CompleteAsync();
+        public async Task<CompanyResponse> SaveAsync(Company company)
+        {
+            try
+            {
+                await _companyRepository.AddAsync(company);
+                await _unitOfWork.CompleteAsync();
 
-        //        return new CategoryResponse(category);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Do some logging stuff
-        //        return new CategoryResponse($"An error occurred when saving the category: {ex.Message}");
-        //    }
-        //}
+                return new CompanyResponse(company);
+            }
+            catch (Exception ex)
+            {
+                // Do some logging stuff
+                return new CompanyResponse($"An error occurred when saving the category: {ex.Message}");
+            }
+        }
 
         //public async Task<CategoryResponse> UpdateAsync(int id, Category category)
         //{

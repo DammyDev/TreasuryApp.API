@@ -38,17 +38,18 @@ namespace TreasuryApp.API
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseInMemoryDatabase(Configuration.GetConnectionString("memory"));
+                options.UseSqlServer(Configuration.GetConnectionString("default"));
+                //options.UseInMemoryDatabase(Configuration.GetConnectionString("memory"));
             });
 
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            //services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
-            services.AddScoped<IProductRepository, ProductRepository>();
+            //services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddScoped<ICategoryService, CategoryService>();
+           // services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICompanyService, CompanyService>();
-            services.AddScoped<IProductService, ProductService>();
+            //services.AddScoped<IProductService, ProductService>();
 
             services.AddAutoMapper(typeof(Startup));
         }

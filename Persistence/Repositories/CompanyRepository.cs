@@ -17,14 +17,14 @@ namespace TreasuryApp.API.Persistence.Repositories
                                  .AsNoTracking()
                                  .ToListAsync();
 
-            // AsNoTracking tells EF Core it doesn't need to track changes on listed entities. Disabling entity
-            // tracking makes the code a little faster
+            // AsNoTracking tells EF Core it doesn't need to track changes on listed entities. 
+            // Disabling entity tracking makes the code a little faster
         }
 
-        //public async Task AddAsync(Category category)
-        //{
-        //    await _context.Categories.AddAsync(category);
-        //}
+        public async Task AddAsync(Company company)
+        {
+            await _context.Companies.AddAsync(company);
+        }
 
         //public async Task<Category> FindByIdAsync(int id)
         //{
