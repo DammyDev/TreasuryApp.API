@@ -110,7 +110,8 @@ namespace TreasuryApp.API.Persistence.Contexts
                     LastEODDate = DateTime.Now,
                     NextEODDate = DateTime.Now,
                     EODGLDate = DateTime.Now,
-                    MRSName = "QQ"
+                    MRSName = "QQ",
+                    IsActive = false
                 }
             );
         }

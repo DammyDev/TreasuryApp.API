@@ -10,6 +10,7 @@ namespace TreasuryApp.API.Domain.Services
         Task<IEnumerable<Company>> ListAsync();
         Task<CompanyResponse> SaveAsync(Company company);
         Task<CompanyResponse> UpdateAsync(int id, Company company);
+        Task<CompanyResponse> UpdateAsync(int id, bool isActive);
         Task<CompanyResponse> DeleteAsync(int id);
     }
 }

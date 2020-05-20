@@ -90,6 +90,28 @@ namespace TreasuryApp.API.Services
             }
         }
 
+        public async Task<CompanyResponse> UpdateAsync(int id, bool isActive)
+        {
+            var existingCompany = await _companyRepository.FindByIdAsync(id);
+
+            if (existingCompany == null)
+                return new CompanyResponse("Company profile not found.");
+
+            existingCompany.IsActive = isActive;
+
+            try
+            {
+                await _unitOfWork.CompleteAsync();
+
+                return new CompanyResponse(existingCompany);
+            }
+            catch (Exception ex)
+            {
+                // Do some logging stuff
+                return new CompanyResponse($"An error occurred when updating the company's active status: {ex.Message}");
+            }
+        }
+
         public async Task<CompanyResponse> DeleteAsync(int id)
         {
             var existingCompany = await _companyRepository.FindByIdAsync(id);

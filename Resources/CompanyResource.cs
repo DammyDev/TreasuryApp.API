@@ -20,5 +20,6 @@ namespace TreasuryApp.API.Resources
         public DateTime NextEODDate { get; set; }
         public DateTime EODGLDate { get; set; }
         public string MRSName { get; set; }
+        public bool IsActive { get; set; } 
     }
 }

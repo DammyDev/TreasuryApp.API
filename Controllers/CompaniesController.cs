@@ -26,7 +26,7 @@ namespace TreasuryApp.API.Controllers
         /// Lists all company profiles.
         /// </summary>
         /// <returns>List of company profiles.</returns>
-        [HttpGet]
+        [HttpGet("getall")]
         [ProducesResponseType(typeof(IEnumerable<CompanyResource>), 200)]
         public async Task<IEnumerable<CompanyResource>> ListAsync()
         {
@@ -41,7 +41,7 @@ namespace TreasuryApp.API.Controllers
         /// </summary>
         /// <param name="resource">Company data.</param>
         /// <returns>Response for the request.</returns>
-        [HttpPost]
+        [HttpPost("create")]
         [ProducesResponseType(typeof(CategoryResource), 201)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
         public async Task<IActionResult> PostAsync([FromBody] SaveCompanyResource resource)
@@ -65,7 +65,7 @@ namespace TreasuryApp.API.Controllers
         /// <param name="id">Company identifier.</param>
         /// <param name="resource">Updated Company profile data.</param>
         /// <returns>Response for the request.</returns>
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         [ProducesResponseType(typeof(CompanyResource), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
         public async Task<IActionResult> PutAsync(int id, [FromBody] SaveCompanyResource resource)
@@ -83,11 +83,35 @@ namespace TreasuryApp.API.Controllers
         }
 
         /// <summary>
+        /// Activates or Deactivates a company profile
+        /// </summary>
+        /// <param name="id">Company identifier.</param>
+        /// <param name="isActive">Company profile active or inactive? true or false?</param>
+        /// <returns>Response for the request.</returns>
+        [HttpPut("activate/{id}")]
+        [ProducesResponseType(typeof(CompanyResource), 200)]
+        [ProducesResponseType(typeof(ErrorResource), 400)]
+        public async Task<IActionResult> ActivateAsync(int id, [FromBody] bool isActive)
+        {
+           // var company = _mapper.Map<SaveCompanyResource, Company>(resource);
+            var result = await _companyService.UpdateAsync(id, isActive);
+
+            if (!result.Success)
+            {
+                return BadRequest(new ErrorResource(result.Message));
+            }
+
+            var companyResource = _mapper.Map<Company, CompanyResource>(result.Resource);
+            return Ok(companyResource);
+        }
+
+
+        /// <summary>
         /// Deletes a given company profile according to an identifier.
         /// </summary>
         /// <param name="id">Company identifier.</param>
         /// <returns>Response for the request.</returns>
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         [ProducesResponseType(typeof(CompanyResource), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
         public async Task<IActionResult> DeleteAsync(int id)
