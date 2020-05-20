@@ -8,8 +8,8 @@ namespace TreasuryApp.API.Domain.Repositories
     {
         Task<IEnumerable<Company>> ListAsync();
         Task AddAsync(Company company);
-        //Task<Category> FindByIdAsync(int id);
-        //void Update(Category category);
-        //void Remove(Category category);
+        Task<Company> FindByIdAsync(int id);
+        void Update(Company company);
+        void Remove(Company company);
     }
 }

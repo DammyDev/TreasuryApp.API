@@ -26,19 +26,19 @@ namespace TreasuryApp.API.Persistence.Repositories
             await _context.Companies.AddAsync(company);
         }
 
-        //public async Task<Category> FindByIdAsync(int id)
-        //{
-        //    return await _context.Categories.FindAsync(id);
-        //}
+        public async Task<Company> FindByIdAsync(int id)
+        {
+            return await _context.Companies.FindAsync(id);
+        }
 
-        //public void Update(Category category)
-        //{
-        //    _context.Categories.Update(category);
-        //}
+        public void Update(Company company)
+        {
+            _context.Companies.Update(company);
+        }
 
-        //public void Remove(Category category)
-        //{
-        //    _context.Categories.Remove(category);
-        //}
+        public void Remove(Company company)
+        {
+            _context.Companies.Remove(company);
+        }
     }
 }

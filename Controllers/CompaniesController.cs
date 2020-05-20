@@ -23,9 +23,9 @@ namespace TreasuryApp.API.Controllers
         }
 
         /// <summary>
-        /// Lists all company entities.
+        /// Lists all company profiles.
         /// </summary>
-        /// <returns>List of company entities.</returns>
+        /// <returns>List of company profiles.</returns>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<CompanyResource>), 200)]
         public async Task<IEnumerable<CompanyResource>> ListAsync()
@@ -37,7 +37,7 @@ namespace TreasuryApp.API.Controllers
         }
 
         /// <summary>
-        /// Add a new company entity.
+        /// Add a new company profile.
         /// </summary>
         /// <param name="resource">Company data.</param>
         /// <returns>Response for the request.</returns>
@@ -59,48 +59,48 @@ namespace TreasuryApp.API.Controllers
             return CreatedAtAction(null, new { id = company.Id }, companyResource);
         }
 
-        ///// <summary>
-        ///// Updates an existing category according to an identifier.
-        ///// </summary>
-        ///// <param name="id">Category identifier.</param>
-        ///// <param name="resource">Updated category data.</param>
-        ///// <returns>Response for the request.</returns>
-        //[HttpPut("{id}")]
-        //[ProducesResponseType(typeof(CategoryResource), 200)]
-        //[ProducesResponseType(typeof(ErrorResource), 400)]
-        //public async Task<IActionResult> PutAsync(int id, [FromBody] SaveCategoryResource resource)
-        //{
-        //    var category = _mapper.Map<SaveCategoryResource, Category>(resource);
-        //    var result = await _categoryService.UpdateAsync(id, category);
+        /// <summary>
+        /// Updates an existing company profile according to an identifier.
+        /// </summary>
+        /// <param name="id">Company identifier.</param>
+        /// <param name="resource">Updated Company profile data.</param>
+        /// <returns>Response for the request.</returns>
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(CompanyResource), 200)]
+        [ProducesResponseType(typeof(ErrorResource), 400)]
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveCompanyResource resource)
+        {
+            var company = _mapper.Map<SaveCompanyResource, Company>(resource);
+            var result = await _companyService.UpdateAsync(id, company);
 
-        //    if (!result.Success)
-        //    {
-        //        return BadRequest(new ErrorResource(result.Message));
-        //    }
+            if (!result.Success)
+            {
+                return BadRequest(new ErrorResource(result.Message));
+            }
 
-        //    var categoryResource = _mapper.Map<Category, CategoryResource>(result.Resource);
-        //    return Ok(categoryResource);
-        //}
+            var companyResource = _mapper.Map<Company, CompanyResource>(result.Resource);
+            return Ok(companyResource);
+        }
 
-        ///// <summary>
-        ///// Deletes a given category according to an identifier.
-        ///// </summary>
-        ///// <param name="id">Category identifier.</param>
-        ///// <returns>Response for the request.</returns>
-        //[HttpDelete("{id}")]
-        //[ProducesResponseType(typeof(CategoryResource), 200)]
-        //[ProducesResponseType(typeof(ErrorResource), 400)]
-        //public async Task<IActionResult> DeleteAsync(int id)
-        //{
-        //    var result = await _categoryService.DeleteAsync(id);
+        /// <summary>
+        /// Deletes a given company profile according to an identifier.
+        /// </summary>
+        /// <param name="id">Company identifier.</param>
+        /// <returns>Response for the request.</returns>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(CompanyResource), 200)]
+        [ProducesResponseType(typeof(ErrorResource), 400)]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            var result = await _companyService.DeleteAsync(id);
 
-        //    if (!result.Success)
-        //    {
-        //        return BadRequest(new ErrorResource(result.Message));
-        //    }
+            if (!result.Success)
+            {
+                return BadRequest(new ErrorResource(result.Message));
+            }
 
-        //    var categoryResource = _mapper.Map<Category, CategoryResource>(result.Resource);
-        //    return Ok(categoryResource);
-        //}
+            var companyResource = _mapper.Map<Company, CompanyResource>(result.Resource);
+            return Ok(companyResource);
+        }
     }
 }

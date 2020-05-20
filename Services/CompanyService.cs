@@ -50,51 +50,65 @@ namespace TreasuryApp.API.Services
             catch (Exception ex)
             {
                 // Do some logging stuff
-                return new CompanyResponse($"An error occurred when saving the category: {ex.Message}");
+                return new CompanyResponse($"An error occurred when saving the company profile: {ex.Message}");
             }
         }
 
-        //public async Task<CategoryResponse> UpdateAsync(int id, Category category)
-        //{
-        //    var existingCategory = await _categoryRepository.FindByIdAsync(id);
+        public async Task<CompanyResponse> UpdateAsync(int id, Company company)
+        {
+            var existingCompany = await _companyRepository.FindByIdAsync(id);
 
-        //    if (existingCategory == null)
-        //        return new CategoryResponse("Category not found.");
+            if (existingCompany == null)
+                return new CompanyResponse("Company profile not found.");
 
-        //    existingCategory.Name = category.Name;
+            existingCompany.Name = company.Name;
+            existingCompany.Country = company.Country;
+            existingCompany.EODGLDate = company.EODGLDate;
+            existingCompany.LastEODDate = company.LastEODDate;
+            existingCompany.MRSName = company.MRSName;
+            existingCompany.NextEODDate = company.NextEODDate;
+            existingCompany.NextTradingDate = company.NextTradingDate;
+            existingCompany.ParentEntity = company.ParentEntity;
+            existingCompany.PhoneNumber = company.PhoneNumber;
+            existingCompany.PhysicalAddress = company.PhysicalAddress;
+            existingCompany.ReportingCurrency = company.ReportingCurrency;
+            existingCompany.ShortName = company.ShortName;
+            existingCompany.SuspenseGLAccount = company.SuspenseGLAccount;
+            existingCompany.SwiftAddress = company.SwiftAddress;
+            existingCompany.TradingDate = company.TradingDate;
 
-        //    try
-        //    {
-        //        await _unitOfWork.CompleteAsync();
+            try
+            {
+                await _unitOfWork.CompleteAsync();
 
-        //        return new CategoryResponse(existingCategory);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Do some logging stuff
-        //        return new CategoryResponse($"An error occurred when updating the category: {ex.Message}");
-        //    }
-        //}
+                return new CompanyResponse(existingCompany);
+            }
+            catch (Exception ex)
+            {
+                // Do some logging stuff
+                return new CompanyResponse($"An error occurred when updating the company: {ex.Message}");
+            }
+        }
 
-        //public async Task<CategoryResponse> DeleteAsync(int id)
-        //{
-        //    var existingCategory = await _categoryRepository.FindByIdAsync(id);
+        public async Task<CompanyResponse> DeleteAsync(int id)
+        {
+            var existingCompany = await _companyRepository.FindByIdAsync(id);
 
-        //    if (existingCategory == null)
-        //        return new CategoryResponse("Category not found.");
+            if (existingCompany == null)
+                return new CompanyResponse("Category not found.");
 
-        //    try
-        //    {
-        //        _categoryRepository.Remove(existingCategory);
-        //        await _unitOfWork.CompleteAsync();
+            try
+            {
+                _companyRepository.Remove(existingCompany);
+                await _unitOfWork.CompleteAsync();
 
-        //        return new CategoryResponse(existingCategory);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Do some logging stuff
-        //        return new CategoryResponse($"An error occurred when deleting the category: {ex.Message}");
-        //    }
-        //}
+                return new CompanyResponse(existingCompany);
+            }
+            catch (Exception ex)
+            {
+                // Do some logging stuff
+                return new CompanyResponse($"An error occurred when deleting the company profile: {ex.Message}");
+            }
+        }
     }
 }
